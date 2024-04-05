@@ -25,6 +25,17 @@ const getDlIndia = (data) => {
   return [maxDlIndia, minDlIndia];
 };
 
+const getPopAust = (data) => {
+  const sortDlAustr = data.map((item) => Number(item[5])).sort((a, b) => b - a);
+  const downloadAust = data.map((item) => Number(item[5]));
+  const sortedTop3 = [
+    data[downloadAust.indexOf(sortDlAustr[0])][0],
+    data[downloadAust.indexOf(sortDlAustr[1])][0],
+    data[downloadAust.indexOf(sortDlAustr[2])][0],
+  ];
+  return sortedTop3.sort();
+};
+
 const tableParsing = (content) => {
   const data = normalizeData(content);
 
@@ -35,6 +46,10 @@ const tableParsing = (content) => {
   // task 1 step 2
   const [maxDlIndia, minDlIndia] = getDlIndia(data);
   console.log(`Download count: Max count: ${maxDlIndia}, Min count: ${minDlIndia}`);
+
+  // task 1 step 3
+  const [top1, top2, top3] = getPopAust(data);
+  console.log(`Top-3 Australia: ${top1}, ${top2}, ${top3}`);
 };
 
 // task 2
