@@ -62,6 +62,23 @@ const numberOfDownload = (data) => {
   return namesAverDl.join(', ');
 };
 
+const topOwner = (data) => {
+  const owners = data.reduce((acc, item) => {
+    const owner = item[1];
+    if (!Object.hasOwn(acc, owner)) {
+      acc[owner] = 0;
+    }
+    acc[owner] += 1;
+    return acc;
+  }, {});
+  // Создаем массив массивов ключей и значений
+  // и фильтруем по значениям (если значение больше или равно двум)
+  const ownersFilt = Object.entries(owners).filter((item) => item[1] >= 2);
+  // Вытаскиваем названия компаний и превращаем их в строку
+  const topOwners = ownersFilt.map((item) => item[0]).join(', ');
+  return topOwners;
+};
+
 const tableParsing = (content) => {
   const data = normalizeData(content);
 
@@ -80,6 +97,10 @@ const tableParsing = (content) => {
   // task 1 step 4
   const names = numberOfDownload(data);
   console.log(`Top downloads: ${names}`);
+
+  // task 1 step 5
+  const owners = topOwner(data);
+  console.log(`Top owner: ${owners}`);
 };
 
 // task 2
