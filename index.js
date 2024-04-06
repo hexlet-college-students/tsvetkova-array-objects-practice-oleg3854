@@ -36,6 +36,32 @@ const getPopAust = (data) => {
   return sortedTop3.sort();
 };
 
+const numberOfDownload = (data) => {
+  // Среднее количество скачиваний
+  const averNumberOfDl = data.reduce((acc, item) => {
+    const count = (Number(item[4]) + Number(item[5]) + Number(item[6]) + Number(item[7])) / 4;
+    acc.push(count);
+    return acc;
+  }, []);
+  // Среднее количество скачиваний + название приложений
+  const averNumberName = averNumberOfDl.reduce((acc, item) => {
+    const nameApp = data[averNumberOfDl.indexOf(item)][0];
+    acc.push([item, nameApp]);
+    return acc;
+  }, []);
+  // Сортируем массив скачиваний по возрастанию
+  averNumberOfDl.sort((a, b) => a - b);
+  // Создаем массив названий приложений по возрастанию по кол-ву  скачиваний
+  // Signal, LINE, WeChat, Viber, Telegram, Snapchat, Facebook Messenger, WhatsApp
+  const namesAverDl = averNumberOfDl.reduce((acc, item) => {
+    const nameApp = averNumberName.filter((num) => num[0] === item);
+    acc.push(nameApp[0][1]);
+    return acc;
+  }, []);
+  // Возвращаем массив элементов в строку через запятую
+  return namesAverDl.join(', ');
+};
+
 const tableParsing = (content) => {
   const data = normalizeData(content);
 
@@ -50,6 +76,10 @@ const tableParsing = (content) => {
   // task 1 step 3
   const [top1, top2, top3] = getPopAust(data);
   console.log(`Top-3 Australia: ${top1}, ${top2}, ${top3}`);
+
+  // task 1 step 4
+  const names = numberOfDownload(data);
+  console.log(`Top downloads: ${names}`);
 };
 
 // task 2
