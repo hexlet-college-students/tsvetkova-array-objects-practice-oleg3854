@@ -115,12 +115,29 @@ const getNameSurname = (data) => {
   return [name, post];
 };
 
+const frames = ['React', 'Angular', 'Vue.js', 'JQuery', 'Backbone.js', 'Node.js', 'Ember.js', 'Meteor'];
+
+const getFrames = (data) => {
+  // Убираем пробелы и приводим к нижнему регистру списки фреймворков
+  const framesToLower = frames.map((item) => item.trim().toLowerCase());
+  const framesNospace = data[5].map((item) => item.trim().toLowerCase());
+  // Получаем список нужных нам фреймворков
+  // React, Node.js, Angular, JQuery, Vue.js
+  const listFrames = framesNospace.filter((item) => framesToLower.includes(item));
+  // Выводим длину этого списка
+  return listFrames.length;
+};
+
 const candidateAssessment = (content) => {
   const data = normalizeDataJob(content);
 
   // task 2 step 1
   const [name, post] = getNameSurname(data);
   console.log(`Job seeker: ${name[0]}, ${post[0]}`);
+
+  // task 2 step 2
+  const numOfFrames = getFrames(data);
+  console.log(`Required stack: ${numOfFrames}`);
 };
 
 // task 3
