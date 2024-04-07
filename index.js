@@ -104,8 +104,23 @@ const tableParsing = (content) => {
 };
 
 // task 2
-const candidateAssessment = (/* content */) => {
 
+const normalizeDataJob = (content) => {
+  const data = content.split('\n');
+  return data.map((item) => item.split(','));
+};
+
+const getNameSurname = (data) => {
+  const [name, post] = [data[0], data[1]];
+  return [name, post];
+};
+
+const candidateAssessment = (content) => {
+  const data = normalizeDataJob(content);
+
+  // task 2 step 1
+  const [name, post] = getNameSurname(data);
+  console.log(`Job seeker: ${name[0]}, ${post[0]}`);
 };
 
 // task 3
