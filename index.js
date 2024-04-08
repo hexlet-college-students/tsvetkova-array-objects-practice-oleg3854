@@ -128,6 +128,13 @@ const getFrames = (data) => {
   return listFrames.length;
 };
 
+const getGitName = (data) => {
+  const socials = data[4].join(',').split(':')[1].split(',').map((item) => item.trim());
+  const linkName = socials.map((item) => item.split('.')).filter((item) => item[0] === 'github').flat();
+  const name = linkName[1].split('/')[1];
+  return name;
+};
+
 const candidateAssessment = (content) => {
   const data = normalizeDataJob(content);
 
@@ -138,6 +145,10 @@ const candidateAssessment = (content) => {
   // task 2 step 2
   const numOfFrames = getFrames(data);
   console.log(`Required stack: ${numOfFrames}`);
+
+  // task 2 step 3
+  const nickName = getGitName(data);
+  console.log(`GitHub nickname: ${nickName}`);
 };
 
 // task 3
